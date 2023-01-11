@@ -17,8 +17,8 @@ const volumeProgress = document.getElementById("progress-volume");
 const loop = document.getElementById("loop");
 const loopImg = document.getElementById("loop-img");
 
-let sec = 0
-let min = 0
+let sec = null;
+let min = null;
 
 let theme = "white";
 
@@ -121,9 +121,16 @@ audio.ontimeupdate = function() {
     progressbar.style.overflow = "hidden";
     progressbar.style.alignContent = "center";
     sessionStorage.setItem("progress", audio.currentTime);
-    sec = audio.currentTime.toFixed(0);
-    min = audio.currentTime.toFixed(0) / 60;
-    progressValue.innerHTML = (min >= 1 ? parseInt(min) + (sec < 10 ? ":0 "+ parseInt(sec) : ":" + parseInt(sec)) : (sec < 10 ? progressValue.innerHTML = "0" + parseInt(sec): progressValue.innerHTML = parseInt(sec)) + "s");
+    sec = parseInt(audio.currentTime.toFixed(0));
+    min = parseInt(sec / 60);
+    if (min >= 1) {
+        progressValue.innerHTML = min + (sec - (min * 60) <= 9 ? ":0" + parseInt(sec - min * 60) : ":" + parseInt(sec - min * 60));
+        console.log(sec - (min * 60));
+        console.log("Sec:" + sec);
+        console.log("Min:" + min);
+    } else {
+        progressValue.innerHTML = (sec <= 9 ? "0" + sec : sec) + "s";
+    }
 };
 
 audio.onended = function() {
@@ -139,7 +146,6 @@ audio.onended = function() {
 
 progressRange.oninput = function() {
     progressbar.value = this.value;
-    progressValue.innerHTML = (min >= 1 ? parseInt(min) + (sec < 10 ? ":0 "+ parseInt(sec) : ":" + parseInt(sec)) : (audio.currentTime.toFixed(0) < 10 ? progressValue.innerHTML = "0" + parseInt(sec) + "s": progressValue.innerHTML = parseInt(sec) + "s"));
     audio.currentTime = this.value;
     progressValue.style.textAlign = "center";
     progressValue.style.color = "white";
