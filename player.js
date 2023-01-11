@@ -123,14 +123,7 @@ audio.ontimeupdate = function() {
     sessionStorage.setItem("progress", audio.currentTime);
     sec = parseInt(audio.currentTime.toFixed(0));
     min = parseInt(sec / 60);
-    if (min >= 1) {
-        progressValue.innerHTML = min + (sec - (min * 60) <= 9 ? ":0" + parseInt(sec - min * 60) : ":" + parseInt(sec - min * 60));
-        console.log(sec - (min * 60));
-        console.log("Sec:" + sec);
-        console.log("Min:" + min);
-    } else {
-        progressValue.innerHTML = (sec <= 9 ? "0" + sec : sec) + "s";
-    }
+    progressValue.innerHTML = (min >= 1 ? min + (sec - (min * 60) <= 9 ? ":0" + parseInt(sec - min * 60) : ":" + parseInt(sec - min * 60)) : (sec <= 9 ? "0" + sec : sec) + "s");
 };
 
 audio.onended = function() {
