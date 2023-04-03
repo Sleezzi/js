@@ -1,5 +1,5 @@
 /**
- * @name AAServerCounterInFolder
+ * @name ServerCounterInFolder
  * @author Sleezzi
  * @description Add a server counter in server folders
  * @version 0.0.1
